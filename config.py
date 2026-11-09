@@ -13,4 +13,4 @@ HASH_GENESIS = "0" * 64
 CODIGO_GENESIS = "000000000"
 
 # Clave secreta para firmar las cookies de sesión de Flask
-SECRET_KEY = "cambia-esta-clave-en-produccion"
+SECRET_KEY = "c0d1g0_s3cr3t0_1234567890"
