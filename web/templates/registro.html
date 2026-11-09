@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% block titulo %}Registro{% endblock %}
+
+{% block contenido %}
+<h2>Registrar entrada</h2>
+
+{% with mensajes = get_flashed_messages(with_categories=true) %}
+  {% for categoria, mensaje in mensajes %}
+    <p class="mensaje {{ categoria }}">{{ mensaje }}</p>
+  {% endfor %}
+{% endwith %}
+
+<form method="post" action="{{ url_for('web.registrar') }}">
+  <label for="codigo">Código de alumno (9 dígitos) o maestro (7 dígitos)</label>
+  <input type="text" id="codigo" name="codigo" inputmode="numeric"
+         pattern="[0-9]{7}|[0-9]{9}" maxlength="9" autocomplete="off" autofocus required>
+  <button type="submit">Registrar</button>
+</form>
+
+<h3>Últimas entradas</h3>
+{% if recientes %}
+<table >
+  <thead>
+    <tr><th>Registro</th><th>Código</th><th>Fecha y hora</th></tr>
+  </thead>
+  <tbody>
+    {% for r in recientes %}
+    <tr>
+      <td>{{ r.id }}</td>
+      <td>{{ r.datos | codigo }}</td>
+      <td>{{ r.timestamp | hora_local }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Aún no hay entradas registradas.</p>
+{% endif %}
+{% endblock %}

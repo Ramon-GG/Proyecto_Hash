@@ -1,0 +1,95 @@
+body { font-family: system-ui, sans-serif; margin: 0; background: #f4f6f8; color: #222; }
+header { background: #1f3a5f; color: #fff; padding: 10px; display: flex; align-items: center; justify-content: space-between; }
+header h1 { margin: 0 0 .5rem; font-size: 1.3rem; }
+.logo { height: 70px; width: auto; display: flex; align-items: center;}
+nav a{ color: #cfe0ff; margin-right: 1rem; text-decoration: none; }
+a{text-decoration: none; color: #cfe0ff; margin-left: 1rem; }
+nav a:hover { text-decoration: underline; }
+main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+form { background: #fff; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; text-align: center;}
+label { display: block; margin-bottom: .5rem; }
+input[type=text] { font-size: 1.2rem; padding: .5rem; width: 12rem; }
+button { font-size: 1rem; padding: .55rem 1.1rem; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: .5rem .75rem; border-bottom: 1px solid #e3e6ea; text-align: left; }
+.mensaje { padding: .6rem .9rem; border-radius: 6px; }
+.mensaje.ok { background: #dff3e4; color: #1b5e2f; }
+.mensaje.error { background: #fbe0e0; color: #8a1f1f; }
+.tabla-ancha { overflow-x: auto; }
+td.hash { font-family: monospace; font-size: .72rem; word-break: break-all; max-width: 260px; }
+tr.roto td { background: #fbe0e0; }
+tbody{align-items: center;}
+
+/* Botones de paginación */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: #f1f1f1;
+    color: #333 !important;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 6px 12px;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+/* Hover */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #333 !important;
+    color: white !important;
+    border-color: #333;
+}
+
+/* Página actual */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #333 !important;
+    color: white !important;
+    border-color: #333;
+
+}
+
+/* Previous y Next */
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+/* Contenedor de información y paginación */
+.dataTables_wrapper .dataTables_info {
+    float: left;
+    clear: both;
+    padding-top: 12px;
+    margin-bottom: 10px;
+}
+
+/* Contenedor de botones */
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+/* Evitar que los botones se encimen */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    display: inline-block;
+    padding: 7px 12px;
+    margin: 0 3px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 600px) {
+    .dataTables_wrapper .dataTables_info {
+        float: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+}

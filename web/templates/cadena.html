@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+{% block titulo %}Cadena{% endblock %}
+
+{% block contenido %}
+<h2>Cadena de registros</h2>
+
+<form method="get" action="{{ url_for('web.cadena') }}">
+  <button type="submit" name="verificar" value="1">Verificar integridad</button>
+</form>
+
+{% if resultado %}
+  {% if resultado.valida %}
+    <p class="mensaje ok">
+      Cadena VÁLIDA: {{ resultado.registros_revisados }} registros verificados.
+    </p>
+  {% else %}
+    <p class="mensaje error">
+      Cadena ALTERADA en el registro {{ resultado.id_roto }}: {{ resultado.motivo }}.
+    </p>
+  {% endif %}
+{% endif %}
+
+<div class="tabla-ancha">
+  <table id="tablax">
+    <thead>
+      <tr>
+        <th>Registro</th>
+        <th>Código</th>
+        <th>Fecha y hora</th>
+        <th>hash previo</th>
+        <th>hash actual</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in registros %}
+      <tr {% if resultado and not resultado.valida and r.id == resultado.id_roto %}class="roto"{% endif %}>
+        <td data-order="{{ r.id }}">
+        {{ r.id }}
+        {% if r.id == 0 %}
+  <!--      <small>(génesis)</small>-->
+        {% endif %}
+        </td>
+        <td>{{ r.datos | codigo }}</td>
+        <td>{{ r.timestamp | hora_local }}</td>
+        <td class="hash">{{ r.prev_hash }}</td>
+        <td class="hash">{{ r.hash_actual }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
