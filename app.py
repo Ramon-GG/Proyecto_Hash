@@ -6,7 +6,7 @@ from config import SECRET_KEY
 from database.connection import conectar, crear_base
 from services.cadena_service import CadenaService
 from utils.fechas import a_local
-from controller.contoller import bp
+from controller.controller import bp
 
 
 def crear_app() -> Flask:
