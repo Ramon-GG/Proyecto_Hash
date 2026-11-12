@@ -1,59 +1,136 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block titulo %}Biblioteca{% endblock %} · Registro de ingresos</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
-</head>
-<body>
-  <header>
-    <div class="logo">
-      <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo de la biblioteca">
-      <h2>Biblioteca - Registro de ingresos</h2>
-    </div>
-    <nav>
-      <a href="/">Registro</a>
-      <a href="/cadena">Cadena</a>
-    </nav>
-    </div>
-</header>
-  <main>
-    {% block contenido %}{% endblock %}
-  </main>
-
-
-
-
-      <!-- JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
-        </script>
-    <!-- DATATABLES -->
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
-    </script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {% block titulo %}Biblioteca{% endblock %} · Registro de ingresos
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-  $(document).ready(function () {
-    $('#tablax').DataTable({
-        "order": [[0, "asc"]],
-        "searching": false,
-            "lengthChange": false,
-                "language": {
-                 "info": "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
-                  "paginate": {
-                "previous": "Anterior",
-                "next": "Siguiente",
-
-            }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            colors: {
+              cut: {
+                navy: "#183152",
+                navyDark: "#0f2038",
+                green: "#16a34a",
+                gold: "#d97706",
+              },
+            },
+          },
         },
-        "columnDefs": [
-            {
-                "targets": 0,
-                "type": "num"
-            }
-        ]
-    });
-});
+      };
     </script>
-</body>
+    <!-- Inicializar tema antes de renderizar para evitar parpadeo -->
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='estilos.css') }}"
+    />
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 font-sans antialiased transition-colors duration-200 min-h-screen flex flex-col"
+  >
+    <!-- Header Institucional CUTonalá (Título y nav a la izquierda, Logo y Tema a la derecha) -->
+    <header
+      class="bg-[#183152] dark:bg-[#0c0c0e] border-b border-[#10223a] dark:boer-zinc-800/90 text-white shadow-md sticky top-0 z-50 transition-colors duration-200"
+    >
+      <div
+        class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4"
+      >
+        <!-- Izquierda: Título y Navegación como en el diseño original -->
+        <div class="space-y-1.5">
+          <div class="flex items-center gap-2.5">
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white">
+              Registro de ingresos a la biblioteca
+            </h1>
+            <span
+              class="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-emerald-300 border border-white/15"
+            >
+              CUT · SHA-256
+            </span>
+          </div>
+
+          <nav class="flex items-center gap-1 pt-0.5">
+            <a
+              href="/"
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all {% if request.path == '/' %}bg-white/15 text-white shadow-sm{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}"
+            >
+              <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+              Registro
+            </a>
+            <a
+              href="{{ url_for('web.cadena') }}"
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all {% if '/cadena' in request.path %}bg-white/15 text-white shadow-sm{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}"
+            >
+              <i data-lucide="link-2" class="w-3.5 h-3.5"></i>
+              Cadena
+            </a>
+          </nav>
+        </div>
+
+        <!-- Derecha: Selector de Tema (Claro/Oscuro) + Logo CUT -->
+        <div class="flex items-center gap-4">
+          <img
+            class="h-11 sm:h-12 w-auto object-contain drop-shadow-sm"
+            src="{{ url_for('static', filename='img/logo.png') }}"
+            alt="Logo CUTonalá"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="max-w-5xl w-full mx-auto px-6 py-8 flex-1">
+      {% block contenido %}{% endblock %}
+    </main>
+
+    <!-- Toast de confirmación -->
+    <div
+      id="toast-copiado"
+      class="fixed bottom-5 right-5 flex items-center gap-2.5 bg-[#183152] dark:bg-zinc-900 border border-emerald-500/40 text-white px-4 py-2.5 rounded-lg shadow-xl text-xs font-mono opacity-0 translate-y-2 pointer-events-none transition-all duration-200 z-50"
+    >
+      <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toast-texto">Copiado al portapapeles</span>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      function copiarHash(boton, textoHash) {
+        navigator.clipboard.writeText(textoHash).then(function () {
+          const toast = document.getElementById("toast-copiado");
+          const toastTexto = document.getElementById("toast-texto");
+          toastTexto.textContent =
+            "Hash copiado: " + textoHash.substring(0, 16) + "...";
+          toast.classList.remove("opacity-0", "translate-y-2");
+          boton.classList.add("ring-2", "ring-emerald-500/50");
+          setTimeout(() => {
+            toast.classList.add("opacity-0", "translate-y-2");
+            boton.classList.remove("ring-2", "ring-emerald-500/50");
+          }, 1800);
+        });
+      }
+    </script>
+  </body>
 </html>

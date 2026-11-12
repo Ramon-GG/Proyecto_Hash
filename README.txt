@@ -53,7 +53,7 @@ Si el archivo requirements.txt no existe, instalar Flask directamente y
 generarlo:
 
     python -m pip install flask
-    python -m pip freeze > requirements.txt
+    python3 -m pip freeze > requirements.txt
 
 Se usa "python -m pip" en lugar de "pip" para asegurar que las librerías se
 instalen en el mismo Python con el que se ejecuta el proyecto.
@@ -67,7 +67,7 @@ Todos los comandos se ejecutan desde la carpeta principal del proyecto.
 
  a) Versión web
 
-        python app.py
+        python3 app.py
 
     Abrir en el navegador: http://127.0.0.1:5000
 
