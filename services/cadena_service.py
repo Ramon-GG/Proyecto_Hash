@@ -15,6 +15,7 @@ def _armar_datos(codigo: str) -> str:
 
 
 class CadenaService:
+    
     def __init__(self, con: sqlite3.Connection):
         self.con = con
         self.repo = RegistroRepository(con)
@@ -62,14 +63,14 @@ class CadenaService:
 
         anterior = None
         for posicion, r in enumerate(registros):
-            # 1. Los id deben ser consecutivos desde 0 (detecta registros borrados)
+            """1. Los id deben ser consecutivos desde 0 (detecta registros borrados)"""
             if r.id != posicion:
                 return Resultado(
                     False, posicion, r.id,
                     f"Falta un registro antes de este (se esperaba el id {posicion})",
                 )
 
-            # 2. El prev_hash debe coincidir con el hash del registro anterior
+            """2. El prev_hash debe coincidir con el hash del registro anterior"""
             esperado = HASH_GENESIS if anterior is None else anterior.hash_actual
             if r.prev_hash != esperado:
                 return Resultado(
@@ -77,7 +78,7 @@ class CadenaService:
                     "El prev_hash no coincide con el hash del registro anterior",
                 )
 
-            # 3. El hash guardado debe coincidir con el recalculado
+            """3. El hash guardado debe coincidir con el recalculado"""
             recalculado = calcular_hash(r.id, r.timestamp, r.datos, r.prev_hash)
             if recalculado != r.hash_actual:
                 return Resultado(

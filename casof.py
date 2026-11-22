@@ -9,12 +9,10 @@ ts, prev_hash = con.execute(
 ).fetchone()
 
 nuevo_hash = calcular_hash(2, ts, NUEVOS_DATOS, prev_hash)
-
 with con:
     con.execute(
         "UPDATE registros SET datos = ?, hash_actual = ? WHERE id = 2",
         (NUEVOS_DATOS, nuevo_hash),
     )
 con.close()
-
 print("Registro 2 alterado y su hash reparado:", nuevo_hash)

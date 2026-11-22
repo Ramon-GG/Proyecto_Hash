@@ -19,8 +19,12 @@ def crear_app() -> Flask:
  
 
     app.register_blueprint(bp)
-    print("Static:", app.static_folder)
-    print("Templates:", app.jinja_loader.searchpath)
+
+    #Se encarga de verificar la base de datos antes de cada request, para asegurarse de que la tabla y el bloque génesis existan
+    @app.before_request
+    def verificar_base_datos():
+        preparar_base()
+    
     # Al arrancar: asegurar que la tabla exista y que haya bloque génesis
     crear_base()
     con = conectar()
@@ -36,6 +40,7 @@ def preparar_base() -> None:
     con = conectar()
     try:
         CadenaService(con).inicializar()
+
     finally:
         con.close()
 
@@ -45,6 +50,8 @@ def _codigo(datos: str) -> str:
         return json.loads(datos).get("codigo", datos)
     except (ValueError, AttributeError):
         return datos
+
+
 
 
 

@@ -43,7 +43,4 @@ def cadena():
         con.close()
     return render_template("cadena.html", registros=registros, resultado=resultado)
 
-    @app.before_request
-    def asegurar_base():
-        if request.endpoint != "static":   # no hace falta para el CSS ni las imágenes
-            preparar_base()
+
