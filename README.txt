@@ -6,8 +6,8 @@
 Proyecto final de la materia IH063 - Criptografía
 Universidad de Guadalajara
 
-Integrantes: [Nombre 1], [Nombre 2]
-Profesor:    [Nombre del profesor]
+Integrantes: Juan Ramon Rodriguez Armas, Carlos Samuel Fierros Garcia, Jose Luis Ramon Camacho
+Profesor:    Cesar Alejandro Garcia Garcia.
 Fecha:       Noviembre de 2026
 
 
