@@ -11,7 +11,6 @@ contenido %}
       >
         Cadena de registros
       </h2>
-      </p>
     </div>
 
     <form method="get" action="{{ url_for('web.cadena') }}">
@@ -62,6 +61,10 @@ contenido %}
   </div>
   {% endif %} {% endif %}
 
+  <!-- Tarjeta contenedora de tabla y paginación -->
+  <div
+    class="rounded-xl border border-slate-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#0c0c0e] shadow-sm overflow-hidden interactive-card"
+  >
     <div class="overflow-x-auto">
       <table id="tablax" class="w-full text-left border-collapse">
         <thead>
@@ -170,9 +173,12 @@ contenido %}
         <button
           type="button"
           id="btn-prev"
-          class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all"
+          class="group inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:-translate-y-0.5 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
         >
-          <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+          <i
+            data-lucide="chevron-left"
+            class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
+          ></i>
           Anterior
         </button>
         <div
@@ -182,10 +188,13 @@ contenido %}
         <button
           type="button"
           id="btn-next"
-          class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all"
+          class="group inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:-translate-y-0.5 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
         >
           Siguiente
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          <i
+            data-lucide="chevron-right"
+            class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+          ></i>
         </button>
       </div>
     </div>
@@ -215,7 +224,6 @@ contenido %}
       });
     });
 
-    const buscador = document.getElementById("buscador-tabla");
     const filasOriginales = Array.from(
       document.querySelectorAll(".fila-bloque"),
     );
@@ -224,20 +232,20 @@ contenido %}
     const btnPrevPage = document.getElementById("btn-prev");
     const btnNextPage = document.getElementById("btn-next");
 
-    const filasPorPagina = 8;
+    const filasPorPagina = 10;
     let paginaActual = 1;
-    let filasFiltradas = [...filasOriginales];
 
     function renderizarTabla() {
-      const total = filasFiltradas.length;
+      const total = filasOriginales.length;
       const totalPaginas = Math.max(1, Math.ceil(total / filasPorPagina));
       if (paginaActual > totalPaginas) paginaActual = totalPaginas;
 
       const inicio = (paginaActual - 1) * filasPorPagina;
       const fin = inicio + filasPorPagina;
 
-      filasOriginales.forEach((f) => (f.style.display = "none"));
-      filasFiltradas.slice(inicio, fin).forEach((f) => (f.style.display = ""));
+      filasOriginales.forEach((f, idx) => {
+        f.style.display = idx >= inicio && idx < fin ? "" : "none";
+      });
 
       const mostrandoInicio = total === 0 ? 0 : inicio + 1;
       const mostrandoFin = Math.min(fin, total);
@@ -254,7 +262,7 @@ contenido %}
         btn.className =
           i === paginaActual
             ? "w-7 h-7 rounded-md bg-[#183152] dark:bg-zinc-100 text-white dark:text-zinc-950 font-semibold text-xs shadow-sm scale-105 transition-all"
-            : "w-7 h-7 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 active:scale-95 text-xs transition-all";
+            : "w-7 h-7 rounded-md border border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:-translate-y-0.5 active:scale-95 text-xs transition-all";
         btn.addEventListener("click", () => {
           paginaActual = i;
           renderizarTabla();
@@ -263,24 +271,22 @@ contenido %}
       }
     }
 
-    buscador.addEventListener("input", (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      filasFiltradas = filasOriginales.filter((fila) =>
-        fila.textContent.toLowerCase().includes(q),
-      );
-      paginaActual = 1;
-      renderizarTabla();
-    });
-
     btnPrevPage.addEventListener("click", () => {
       if (paginaActual > 1) {
         paginaActual--;
         renderizarTabla();
       }
     });
+
     btnNextPage.addEventListener("click", () => {
-      paginaActual++;
-      renderizarTabla();
+      const totalPaginas = Math.max(
+        1,
+        Math.ceil(filasOriginales.length / filasPorPagina),
+      );
+      if (paginaActual < totalPaginas) {
+        paginaActual++;
+        renderizarTabla();
+      }
     });
 
     renderizarTabla();
