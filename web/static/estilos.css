@@ -1,95 +1,53 @@
-body { font-family: system-ui, sans-serif; margin: 0; background: #f4f6f8; color: #222; }
-header { background: #1f3a5f; color: #fff; padding: 10px; display: flex; align-items: center; justify-content: space-between; }
-header h1 { margin: 0 0 .5rem; font-size: 1.3rem; }
-.logo { height: 70px; width: auto; display: flex; align-items: center;}
-nav a{ color: #cfe0ff; margin-right: 1rem; text-decoration: none; }
-a{text-decoration: none; color: #cfe0ff; margin-left: 1rem; }
-nav a:hover { text-decoration: underline; }
-main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-form { background: #fff; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; text-align: center;}
-label { display: block; margin-bottom: .5rem; }
-input[type=text] { font-size: 1.2rem; padding: .5rem; width: 12rem; }
-button { font-size: 1rem; padding: .55rem 1.1rem; cursor: pointer; }
-table { width: 100%; border-collapse: collapse; background: #fff; }
-th, td { padding: .5rem .75rem; border-bottom: 1px solid #e3e6ea; text-align: left; }
-.mensaje { padding: .6rem .9rem; border-radius: 6px; }
-.mensaje.ok { background: #dff3e4; color: #1b5e2f; }
-.mensaje.error { background: #fbe0e0; color: #8a1f1f; }
-.tabla-ancha { overflow-x: auto; }
-td.hash { font-family: monospace; font-size: .72rem; word-break: break-all; max-width: 260px; }
-tr.roto td { background: #fbe0e0; }
-tbody{align-items: center;}
-
-/* Botones de paginación */
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    background-color: #f1f1f1;
-    color: #333 !important;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 6px 12px;
-    margin: 0 3px;
-    cursor: pointer;
+/* Scrollbar minimalista */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
-/* Hover */
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background-color: #333 !important;
-    color: white !important;
-    border-color: #333;
+/* Animación de entrada suave al cargar vistas */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Página actual */
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: #333 !important;
-    color: white !important;
-    border-color: #333;
-
+.animate-enter {
+  animation: fadeSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Previous y Next */
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous,
-.dataTables_wrapper .dataTables_paginate .paginate_button.next {
-    background-color: #e0e0e0;
-    font-weight: bold;
+/* Tarjeta interactiva con borde reactivo y elevación sutil */
+.interactive-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
-/* Contenedor de información y paginación */
-.dataTables_wrapper .dataTables_info {
-    float: left;
-    clear: both;
-    padding-top: 12px;
-    margin-bottom: 10px;
+.interactive-card:hover {
+  border-color: rgba(63, 63, 70, 0.9);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(16, 185, 129, 0.08);
 }
 
-/* Contenedor de botones */
-.dataTables_wrapper .dataTables_paginate {
-    float: right;
-    padding-top: 5px;
-    margin-bottom: 10px;
-    white-space: nowrap;
-}
-
-/* Evitar que los botones se encimen */
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    display: inline-block;
-    padding: 7px 12px;
-    margin: 0 3px;
-    border-radius: 5px;
-    white-space: nowrap;
-}
-
-/* Adaptación a pantallas pequeñas */
-@media (max-width: 600px) {
-    .dataTables_wrapper .dataTables_info {
-        float: none;
-        text-align: center;
-        width: 100%;
-    }
-
-    .dataTables_wrapper .dataTables_paginate {
-        float: none;
-        text-align: center;
-        width: 100%;
-        margin-top: 10px;
-    }
+/* Resaltado cuando se conecta el Hash Previo con el Hash Padre */
+.hash-linked-highlight {
+  border-color: #10b981 !important;
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
 }
